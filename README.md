@@ -30,7 +30,11 @@
         - rails -v
         - rails new . --database=postgresql
             - READMEが競合するが更新
-        
+    - Devise Gemの導入
+        - Gemfileにgem 'devise'を追加し、bundle installを実行
+        - rails generate devise:install
+        - rails generate devise User
+        - rails db:migrate
 
 
 
