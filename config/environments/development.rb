@@ -36,6 +36,8 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  config.action_controller.forgery_protection_origin_check = false
+
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
 
