@@ -35,7 +35,8 @@
         - rails generate devise:install
         - rails generate devise User
         - rails db:migrate
-
+- POSTリクエストが処理できない問題を対応
+    - https://zenn.dev/hamajyotan/articles/8a7e430a556b3e#post-%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%81%8C%E5%87%A6%E7%90%86%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84
 
 
 This README would normally document whatever steps are necessary to get the
