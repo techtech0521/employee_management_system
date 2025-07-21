@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  # get "users/index"
+  # get "users/show"
+  # get "users/edit"
+  # get "users/update"
+  # get "users/destroy"
+  # get "users/new"
+  # get "users/create"
   get "home/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -13,7 +20,15 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  devise_for :users
-  
+  devise_for :users, skip: [:registrations]
+  resources :users
+
+  devise_scope :user do
+    get 'users/edit', to: 'devise/registrations#edit', as: :edit_user_registration
+    patch 'users', to: 'devise/registrations#update', as: :user_registration
+    put 'users', to: 'devise/registrations#update'
+    delete 'users', to: 'devise/registrations#destroy' # 必要であればアカウント削除も残す
+  end
+
   root to: "home#index"
 end
