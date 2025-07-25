@@ -1,2 +1,51 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<%# app/views/users/index.html.erb %>
+
+<h1>社員一覧</h1>
+
+<%# 新規社員登録ボタンは、管理者にのみ表示 %>
+<% if policy(User).new? %> <%# Userモデル全体に対するnewアクションの権限をチェック %>
+  <%= link_to "新規社員登録", new_user_path %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>社員番号</th>
+      <th>名前</th>
+      <th>ふりがな</th>
+      <th>所属部署</th>
+      <th>電話番号</th>
+      <th>メールアドレス</th>
+      <th>管理者</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.employee_number %></td>
+        <td><%= user.name %></td>
+        <td><%= user.furigana %></td>
+        <td><%= user.department %></td>
+        <td><%= user.phone_number %></td>
+        <td><%= user.email %></td>
+        <td><%= user.administrator_flag ? 'はい' : 'いいえ' %></td>
+        <td>
+          <%= link_to "詳細", user %>
+          <%# 編集リンクは、管理者、または自身の情報であれば表示 %>
+          <% if policy(user).edit? %> <%# 特定のuserオブジェクトに対するedit権限をチェック %>
+            <%= link_to "編集", edit_user_path(user) %>
+          <% end %>
+          <%# 削除ボタンは、管理者のみ表示 %>
+          <% if policy(user).destroy? %> <%# 特定のuserオブジェクトに対するdestroy権限をチェック %>
+            <%= button_to "削除", user, method: :delete, data: { confirm: "本当にこの社員を削除しますか？" } %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%# フラッシュメッセージの表示（layouts/application.html.erbにもあるはずですが、念のため） %>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>

@@ -51,4 +51,8 @@ class UserPolicy < ApplicationPolicy
       [:password, :password_confirmation]
     end
   end
+
+  def can_manage_administrator_flag?
+    user.administrator_flag?
+  end
 end

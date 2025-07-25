@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   def update
     authorize @user
 
-    if @user.update(policy(@user).permitted_attributes_for_update)
+    if @user.update(user_params)
       redirect_to @user, notice: '社員情報を更新しました。'
     else
       render :edit, status: :unprocessable_entity
@@ -54,6 +54,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :name, :employee_number, :furigana, :department, :phone_number, :administrator_flag)
+    params.require(:user).permit(policy(@user).permitted_attributes_for_update)
   end
 end

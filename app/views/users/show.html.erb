@@ -1,2 +1,27 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<%# app/views/users/show.html.erb %>
+
+<h1>社員詳細</h1>
+
+<p><strong>社員番号:</strong> <%= @user.employee_number %></p>
+<p><strong>名前:</strong> <%= @user.name %></p>
+<p><strong>ふりがな:</strong> <%= @user.furigana %></p>
+<p><strong>所属部署:</strong> <%= @user.department %></p>
+<p><strong>電話番号:</strong> <%= @user.phone_number %></p>
+<p><strong>メールアドレス:</strong> <%= @user.email %></p>
+<p><strong>管理者:</strong> <%= @user.administrator_flag ? 'はい' : 'いいえ' %></p>
+
+<%# 編集リンクは、管理者、または自身の情報であれば表示 %>
+<% if policy(@user).edit? %>
+  <%= link_to "編集", edit_user_path(@user) %>
+<% end %>
+
+<%# 削除ボタンは、管理者のみ表示 %>
+<% if policy(@user).destroy? %>
+  <%= button_to "削除", @user, method: :delete, data: { confirm: "本当にこの社員を削除しますか？" } %>
+<% end %>
+
+<%= link_to "社員一覧に戻る", users_path %>
+
+<%# フラッシュメッセージの表示 %>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>

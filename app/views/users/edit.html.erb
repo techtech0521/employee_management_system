@@ -1,2 +1,8 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<%# app/views/users/edit.html.erb %>
+
+<h1>社員情報編集</h1>
+
+<%= render 'form', user: @user %>
+
+<%= link_to "社員詳細に戻る", user_path(@user) %> |
+<%= link_to "社員一覧に戻る", users_path %>
