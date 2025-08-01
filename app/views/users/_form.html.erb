@@ -1,12 +1,14 @@
 <%# app/views/users/_form.html.erb %>
 
 <%= form_with(model: user) do |f| %>
+  <%# エラーメッセージの表示 %>
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
       <ul>
-        <% user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
@@ -14,7 +16,13 @@
 
   <div class="field">
     <%= f.label :employee_number %><br />
-    <%= f.text_field :employee_number %>
+    <%# 🚨 ここを修正 - 新規登録時は「自動採番」と表示、編集時は現在の社員番号を表示 🚨 %>
+    <% if user.new_record? %>
+      <p>自動採番されます</p>
+    <% else %>
+      <p><%= @user.employee_number %></p>
+      <%# hidden_fieldは不要（ポリシーで許可しないため、送信されても無視される） %>
+    <% end %>
   </div>
 
   <div class="field">
@@ -29,7 +37,13 @@
 
   <div class="field">
     <%= f.label :department %><br />
-    <%= f.text_field :department %>
+    <%# 部署も管理者のみ編集可能にする場合（UserPolicyで制御） %>
+    <% if policy(user).can_manage_administrator_flag? %>
+      <%= f.text_field :department %>
+    <% else %>
+      <%# 部署も編集不可だが表示はする。Hiddenフィールドも不要 %>
+      <p><%= @user.department %></p>
+    <% end %>
   </div>
 
   <div class="field">
@@ -52,8 +66,7 @@
     <%= f.password_field :password_confirmation %>
   </div>
 
-  <%# 管理者フラグは管理者のみが編集可能 %>
-  <%# 修正！ 新しいポリシーメソッドを呼び出す %>
+  <%# 管理者フラグは管理者のみ編集可能 %>
   <% if policy(user).can_manage_administrator_flag? %>
     <div class="field">
       <%= f.label :administrator_flag %><br />
