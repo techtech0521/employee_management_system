@@ -44,6 +44,14 @@ class UserPolicy < ApplicationPolicy
     user.administrator_flag?
   end
 
+  def permitted_attributes_for_create
+    if user.administrator_flag?
+      [:administrator_flag, :employee_number, :name, :furigana, :department, :phone_number, :email, :password, :password_confirmation]
+    else
+      []
+    end
+  end
+
   def permitted_attributes_for_update
     if user.administrator_flag?
       [:administrator_flag, :employee_number, :name, :furigana, :department, :phone_number, :email, :password, :password_confirmation]

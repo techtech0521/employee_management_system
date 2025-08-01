@@ -54,6 +54,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(policy(@user).permitted_attributes_for_update)
+    params.require(:user).permit(policy(User).permitted_attributes_for_create)
   end
 end
