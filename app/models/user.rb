@@ -12,12 +12,19 @@ class User < ApplicationRecord
   validates :department, presence: true
   validates :phone_number, presence: true, format: { with: /\A\d{10,11}\z/, message: "は10桁または11桁の数字で入力してください" }
 
-  before_validation :set_employee_number, on: :create
+  before_validation -> { generate_unique_employee_number if new_record? && employee_number.nil? }
 
   private
 
-  def set_employee_number
-    last_employee_number = User.maximum(:employee_number).to_i
-    self.employee_number = last_employee_number.zero? ? 100 : last_employee_number + 1
+  def generate_unique_employee_number
+    # 重複しない番号が見つかるまで探し続ける
+    last_number = User.maximum(:employee_number).to_i
+    new_number = last_number.zero? ? 100 : last_number + 1
+
+    while User.exists?(employee_number: new_number)
+      new_number += 1
+    end
+
+    self.employee_number = new_number
   end
 end
