@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :employee_number, uniqueness: true, on: :create # uniquenessは新規作成時のみ適用
+  validates :employee_number, presence: true, uniqueness: true, on: :create # uniquenessは新規作成時のみ適用
   validates :employee_number, format: { with: /\A[0-9]{3}\z/, message: "は3桁の数字で入力してください" }, allow_blank: true # 3桁の数字形式をチェック
 
   validates :name, presence: true
@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :department, presence: true
   validates :phone_number, presence: true, format: { with: /\A\d{10,11}\z/, message: "は10桁または11桁の数字で入力してください" }
 
-  before_validation -> { generate_unique_employee_number if new_record? && employee_number.nil? }
+  # before_validation -> { generate_unique_employee_number if new_record? && employee_number.nil? }
 
   private
 
