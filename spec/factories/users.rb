@@ -5,7 +5,7 @@ FactoryBot.define do
     name { 'テストユーザー' }
     furigana { 'テストユーザー' }
     sequence(:email) { |n| "test#{n}@example.com" }
-    department { '開発部' }
+    department { '技術部' }
     phone_number { '09012345678' }
     password { 'password' }
     password_confirmation { 'password' }

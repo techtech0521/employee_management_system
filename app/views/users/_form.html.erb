@@ -39,7 +39,7 @@
     <%= f.label :department %><br />
     <%# 部署も管理者のみ編集可能にする場合（UserPolicyで制御） %>
     <% if policy(user).can_manage_administrator_flag? %>
-      <%= f.text_field :department %>
+      <%= f.select :department, User::DEPARTMENTS, { prompt: "部署を選択" } %>
     <% else %>
       <%# 部署も編集不可だが表示はする。Hiddenフィールドも不要 %>
       <p><%= @user.department %></p>

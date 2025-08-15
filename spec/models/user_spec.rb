@@ -65,6 +65,16 @@ RSpec.describe User, type: :model do
         expect(user).to be_invalid
         expect(user.errors[:department]).to include("can't be blank")
       end
+
+      it '正しい部署名のみ有効' do
+        user.department = '総務部'
+        expect(user).to be_valid
+        user.department = '営業部'
+        expect(user).to be_valid
+        user.department = '不正な部署'
+        expect(user).to be_invalid
+        expect(user.errors[:department]).to include("is not included in the list")
+      end
     end
 
     context 'phone_number' do

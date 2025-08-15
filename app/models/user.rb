@@ -9,7 +9,10 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :furigana, presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: "は全角カタカナで入力してください" }
-  validates :department, presence: true
+
+  DEPARTMENTS = %w[総務部 人事部 営業部 技術部].freeze
+  validates :department, presence: true, inclusion: { in: DEPARTMENTS }
+  
   validates :phone_number, presence: true, format: { with: /\A\d{10,11}\z/, message: "は10桁または11桁の数字で入力してください" }
 
   # before_validation -> { generate_unique_employee_number if new_record? && employee_number.nil? }
