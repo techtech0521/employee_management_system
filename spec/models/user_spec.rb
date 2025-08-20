@@ -11,17 +11,6 @@ RSpec.describe User, type: :model do
 
     # --- 社員番号のバリデーション ---
     context 'employee_number' do
-      it 'なければ無効' do
-        user.employee_number = nil
-        expect(user).to be_invalid
-        expect(user.errors[:employee_number]).to include("can't be blank")
-        # # `FactoryBot.build`でメモリ上のオブジェクトを生成
-        # user = FactoryBot.build(:user, employee_number: nil)
-        # # `valid?`を実行してバリデーションをトリガー
-        # user.valid?
-        # expect(user.errors[:employee_number]).to include("can't be blank")
-      end
-
       it '重複していれば無効' do
         FactoryBot.create(:user, employee_number: user.employee_number)
         expect(user).to be_invalid
@@ -89,6 +78,16 @@ RSpec.describe User, type: :model do
         expect(user).to be_invalid
         expect(user.errors[:phone_number]).to include("は10桁または11桁の数字で入力してください")
       end
+    end
+  end
+
+  describe '社員番号の自動採番' do
+    it '新規作成時に自動で3桁連番が割り当てられる' do
+      User.destroy_all
+      user1 = FactoryBot.create(:user, employee_number: nil)
+      expect(user1.employee_number).to eq('001')
+      user2 = FactoryBot.create(:user, employee_number: nil)
+      expect(user2.employee_number).to eq('002')
     end
   end
 end

@@ -1,7 +1,7 @@
 # spec/factories/users.rb
 FactoryBot.define do
   factory :user do
-    sequence(:employee_number) { |n| "1#{'%02d' % n}" }
+    sequence(:employee_number) { |n| format('%03d', n) }
     name { 'テストユーザー' }
     furigana { 'テストユーザー' }
     sequence(:email) { |n| "test#{n}@example.com" }
@@ -13,7 +13,7 @@ FactoryBot.define do
   end
 
   factory :administrator, class: 'User' do
-    sequence(:employee_number) { |n| "2#{'%02d' % n}" }
+    sequence(:employee_number) { |n| format('%03d', n + 100) }
     name { '管理者' }
     furigana { 'カンリシャ' }
     sequence(:email) { |n| "admin#{n}@example.com" }

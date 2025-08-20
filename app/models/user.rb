@@ -4,7 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :employee_number, presence: true, uniqueness: true, on: :create # uniquenessは新規作成時のみ適用
+  # validates :employee_number, presence: true, uniqueness: true, on: :create # uniquenessは新規作成時のみ適用
+  validates :employee_number, presence: true, uniqueness: true
   validates :employee_number, format: { with: /\A[0-9]{3}\z/, message: "は3桁の数字で入力してください" }, allow_blank: true # 3桁の数字形式をチェック
 
   validates :name, presence: true
@@ -15,19 +16,15 @@ class User < ApplicationRecord
   
   validates :phone_number, presence: true, format: { with: /\A\d{10,11}\z/, message: "は10桁または11桁の数字で入力してください" }
 
-  # before_validation -> { generate_unique_employee_number if new_record? && employee_number.nil? }
+  before_validation :assign_employee_number, on: :create
 
   private
 
-  def generate_unique_employee_number
-    # 重複しない番号が見つかるまで探し続ける
-    last_number = User.maximum(:employee_number).to_i
-    new_number = last_number.zero? ? 100 : last_number + 1
-
-    while User.exists?(employee_number: new_number)
-      new_number += 1
+  # 3桁の連番で自動採番
+  def assign_employee_number
+    if self.employee_number.blank?
+      last_number = User.maximum("CAST(employee_number AS integer)") || 0
+      self.employee_number = format('%03d', last_number.to_i + 1)
     end
-
-    self.employee_number = new_number
   end
 end
