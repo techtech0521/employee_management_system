@@ -8,7 +8,12 @@
 
   <div class="field">
     <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
+    <%= f.password_field :password, id: "password-field", autocomplete: "current-password" %>
+  </div>
+
+  <div class="field">
+    <%= check_box_tag :show_password, nil, false, id: "show-password-checkbox", data: { target: "password-field" } %>
+    <%= label_tag :show_password, "パスワードを表示" %>
   </div>
 
   <% if devise_mapping.rememberable? %>
@@ -24,3 +29,21 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+<script>
+  // JavaScriptの処理
+  document.addEventListener('DOMContentLoaded', () => {
+    const showPasswordCheckbox = document.getElementById('show-password-checkbox');
+    const passwordField = document.getElementById('password-field');
+
+    if (showPasswordCheckbox && passwordField) {
+      showPasswordCheckbox.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          passwordField.type = 'text';
+        } else {
+          passwordField.type = 'password';
+        }
+      });
+    }
+  });
+</script>
