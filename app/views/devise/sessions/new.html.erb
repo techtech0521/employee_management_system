@@ -30,20 +30,4 @@
 
 <%= render "devise/shared/links" %>
 
-<script>
-  // JavaScriptの処理
-  document.addEventListener('DOMContentLoaded', () => {
-    const showPasswordCheckbox = document.getElementById('show-password-checkbox');
-    const passwordField = document.getElementById('password-field');
-
-    if (showPasswordCheckbox && passwordField) {
-      showPasswordCheckbox.addEventListener('change', (e) => {
-        if (e.target.checked) {
-          passwordField.type = 'text';
-        } else {
-          passwordField.type = 'password';
-        }
-      });
-    }
-  });
-</script>
+<%= javascript_include_tag 'devise_custom' %>
