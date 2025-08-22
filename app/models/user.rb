@@ -16,6 +16,8 @@ class User < ApplicationRecord
   
   validates :phone_number, presence: true, format: { with: /\A\d{10,11}\z/, message: "は10桁または11桁の数字で入力してください" }
 
+  validates :password, presence: true, on: :create
+
   before_validation :assign_employee_number, on: :create
 
   private

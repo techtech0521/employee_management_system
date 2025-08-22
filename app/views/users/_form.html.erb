@@ -56,15 +56,17 @@
     <%= f.email_field :email %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
+  <% if user.new_record? %>
+    <div class="field">
+      <%= f.label :password %><br />
+      <%= f.password_field :password %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
-  </div>
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation %>
+    </div>
+  <% end %>
 
   <%# 管理者フラグは管理者のみ編集可能 %>
   <% if policy(user).can_manage_administrator_flag? %>
