@@ -1,0 +1,15 @@
+<header class="main-header">
+  <div class="container">
+    <div class="logo">
+      <h1><a href="/">社員管理システム</a></h1>
+    </div>
+    <nav class="nav-links">
+      <% if user_signed_in? %>
+        <span class="user-name">ようこそ、<%= current_user.name %>さん</span>
+        <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete } %>
+      <% else %>
+        <%= link_to 'ログイン', new_user_session_path %>
+      <% end %>
+    </nav>
+  </div>
+</header>
