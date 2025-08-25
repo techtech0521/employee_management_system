@@ -24,7 +24,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    # --- 名前とフリガナのバリデーション ---
+    # --- 名前とふりがなのバリデーション ---
     context 'name' do
       it 'なければ無効' do
         user.name = nil
@@ -40,10 +40,12 @@ RSpec.describe User, type: :model do
         expect(user.errors[:furigana]).to include("can't be blank")
       end
 
-      it '全角カタカナでなければ無効' do
-        user.furigana = 'やまだたろう'
+      it 'ひらがなでなければ無効' do
+        user.furigana = 'ヤマダタロウ'
         expect(user).to be_invalid
-        expect(user.errors[:furigana]).to include("は全角カタカナで入力してください")
+        expect(user.errors[:furigana]).to include("はひらがなのみで入力してください")
+        user.furigana = 'やまだたろう'
+        expect(user).to be_valid
       end
     end
 

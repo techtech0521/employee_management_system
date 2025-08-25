@@ -9,3 +9,4 @@ namespace :employee_number do
     end
     puts "Reset #{users.count} users' employee_number to continuous 3-digit numbers."
   end
+end

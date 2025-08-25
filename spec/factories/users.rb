@@ -3,7 +3,7 @@ FactoryBot.define do
   factory :user do
     sequence(:employee_number) { |n| format('%03d', n) }
     name { 'テストユーザー' }
-    furigana { 'テストユーザー' }
+    furigana { 'てすとゆーざー' }
     sequence(:email) { |n| "test#{n}@example.com" }
     department { '技術部' }
     phone_number { '09012345678' }
@@ -15,7 +15,7 @@ FactoryBot.define do
   factory :administrator, class: 'User' do
     sequence(:employee_number) { |n| format('%03d', n + 100) }
     name { '管理者' }
-    furigana { 'カンリシャ' }
+    furigana { 'かんりしゃ' }
     sequence(:email) { |n| "admin#{n}@example.com" }
     department { '管理部' }
     phone_number { '09098765432' }

@@ -68,3 +68,5 @@ end
 gem 'devise'
 
 gem 'pundit'
+
+gem 'nkf'

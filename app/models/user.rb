@@ -9,7 +9,7 @@ class User < ApplicationRecord
   validates :employee_number, format: { with: /\A[0-9]{3}\z/, message: "は3桁の数字で入力してください" }, allow_blank: true # 3桁の数字形式をチェック
 
   validates :name, presence: true
-  validates :furigana, presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: "は全角カタカナで入力してください" }
+  validates :furigana, presence: true, format: { with: /\A[ぁ-んー－]+\z/, message: "はひらがなのみで入力してください" }
 
   DEPARTMENTS = %w[総務部 人事部 営業部 技術部].freeze
   validates :department, presence: true, inclusion: { in: DEPARTMENTS }
