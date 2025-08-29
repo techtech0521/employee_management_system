@@ -70,3 +70,6 @@ gem 'devise'
 gem 'pundit'
 
 gem 'nkf'
+
+gem "dartsass-rails"
+gem "bootstrap", "~> 5.3.3"
