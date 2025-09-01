@@ -1,11 +1,18 @@
-<header class="main-header py-2 border-bottom">
+<header class="main-header border-bottom py-2">
   <div class="container d-flex justify-content-between align-items-center">
     <div class="logo">
-      <h1 class="h4 mb-0"><a href="/" class="text-dark text-decoration-none">社員管理システム</a></h1>
+      <h1 class="h4 mb-0">
+        <a href="/" class="text-dark text-decoration-none">
+          社員管理システム
+        </a>
+      </h1>
     </div>
-    <nav class="nav-links">
+
+    <nav class="nav-links d-flex align-items-center">
       <% if user_signed_in? %>
-        <span class="user-name me-3 text-secondary fw-bold">ようこそ、<%= current_user.name %>さん</span>
+        <span class="user-name text-secondary fw-bold me-3">
+          ようこそ、<%= current_user.name %>さん
+        </span>
         <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-primary btn-sm" %>
       <% else %>
         <%= link_to 'ログイン', new_user_session_path, class: "btn btn-primary btn-sm" %>
