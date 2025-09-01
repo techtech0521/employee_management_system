@@ -1,14 +1,14 @@
-<header class="main-header">
-  <div class="container">
+<header class="main-header py-2 border-bottom">
+  <div class="container d-flex justify-content-between align-items-center">
     <div class="logo">
-      <h1><a href="/">社員管理システム</a></h1>
+      <h1 class="h4 mb-0"><a href="/" class="text-dark text-decoration-none">社員管理システム</a></h1>
     </div>
     <nav class="nav-links">
       <% if user_signed_in? %>
-        <span class="user-name">ようこそ、<%= current_user.name %>さん</span>
-        <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete } %>
+        <span class="user-name me-3 text-secondary fw-bold">ようこそ、<%= current_user.name %>さん</span>
+        <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-primary btn-sm" %>
       <% else %>
-        <%= link_to 'ログイン', new_user_session_path %>
+        <%= link_to 'ログイン', new_user_session_path, class: "btn btn-primary btn-sm" %>
       <% end %>
     </nav>
   </div>
