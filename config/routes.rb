@@ -30,5 +30,5 @@ Rails.application.routes.draw do
     delete 'users', to: 'devise/registrations#destroy' # 必要であればアカウント削除も残す
   end
 
-  root to: "home#index"
+  root to: "users#index"
 end
