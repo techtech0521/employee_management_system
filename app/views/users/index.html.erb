@@ -1,48 +1,63 @@
 <%# app/views/users/index.html.erb %>
 
-<h1>社員一覧</h1>
-
-<%# 新規社員登録ボタン（管理者のみ表示） %>
-<% if policy(User).new? %>
-  <%= link_to "新規社員登録", new_user_path, class: "btn btn-primary" %>
-<% end %>
-
-<table class="table table-striped mt-3">
-  <thead>
-    <tr>
-      <th>社員番号</th>
-      <th>名前</th>
-      <th>ふりがな</th>
-      <th>部署</th>
-      <th>電話番号</th>
-      <th>メールアドレス</th>
-      <th>管理者フラグ</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.employee_number %></td>
-        <td><%= user.name %></td>
-        <td><%= user.furigana %></td>
-        <td><%= user.department %></td>
-        <td><%= user.phone_number %></td>
-        <td><%= user.email %></td>
-        <td><%= user.administrator_flag ? 'はい' : 'いいえ' %></td>
-        <td><%= link_to "詳細", user %></td>
-        <%# 編集・削除リンク（UserPolicyに従って表示制御） %>
-        <% if policy(user).edit? %>
-          <td><%= link_to "編集", edit_user_path(user) %></td>
-        <% end %>
-        <% if policy(user).destroy? %>
-          <td><%= link_to "削除", user, data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="container py-4">
+  <div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h1 class="h3 card-title mb-0">社員一覧</h1>
+      <% if policy(User).new? %>
+        <%= link_to "新規社員登録", new_user_path, class: "btn btn-primary" %>
+      <% end %>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover table-striped mt-3">
+          <thead class="table-light">
+            <tr>
+              <th>社員番号</th>
+              <th>名前</th>
+              <th>ふりがな</th>
+              <th>部署</th>
+              <th>電話番号</th>
+              <th>メールアドレス</th>
+              <th class="text-center">管理者</th>
+              <th class="text-center">アクション</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.employee_number %></td>
+                <td><%= user.name %></td>
+                <td><%= user.furigana %></td>
+                <td><%= user.department %></td>
+                <td><%= user.phone_number %></td>
+                <td><%= user.email %></td>
+                <td class="text-center">
+                  <% if user.administrator_flag %>
+                    <span class="badge bg-success">はい</span>
+                  <% else %>
+                    <span class="badge bg-secondary">いいえ</span>
+                  <% end %>
+                </td>
+                <td class="text-center">
+                  <div class="btn-group btn-group-sm" role="group">
+                    <%= link_to "詳細", user, class: "btn btn-info text-white" %>
+                    <% if policy(user).edit? %>
+                      <%= link_to "編集", edit_user_path(user), class: "btn btn-warning" %>
+                    <% end %>
+                    <% if policy(user).destroy? %>
+                      <%= link_to "削除", user, data: { turbo_method: :delete, turbo_confirm: "本当に#{user.name}さんを削除しますか？" }, class: "btn btn-danger" %>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
 <%# オプション: ページネーションを後で追加する場合のプレースホルダー %>
 <%# <%= paginate @users %>
