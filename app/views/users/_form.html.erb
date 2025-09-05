@@ -3,10 +3,11 @@
 <%= form_with(model: user) do |f| %>
   <%# エラーメッセージの表示 %>
   <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">入力内容に不備があります</h4>
+      <p>以下の<%= pluralize(user.errors.count, "項目") %>をご確認ください。</p>
+      <hr>
+      <ul class="mb-0">
         <% user.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -14,69 +15,70 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :employee_number %><br />
-    <%# 🚨 ここを修正 - 新規登録時は「自動採番」と表示、編集時は現在の社員番号を表示 🚨 %>
+  <%# フォーム入力項目 %>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :employee_number, "社員番号", class: "form-label" %>
+      <% if user.new_record? %>
+        <p class="form-control-plaintext">※ 自動採番されます</p>
+      <% else %>
+        <p class="form-control-plaintext"><%= user.employee_number %></p>
+      <% end %>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+      <%= f.label :name, "名前", class: "form-label" %>
+      <%= f.text_field :name, class: "form-control", placeholder: "山田 太郎" %>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <%= f.label :furigana, "ふりがな", class: "form-label" %>
+      <%= f.text_field :furigana, class: "form-control", placeholder: "やまだ たろう" %>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+      <%= f.label :department, "部署", class: "form-label" %>
+      <% if policy(user).can_manage_administrator_flag? %>
+        <%= f.select :department, User::DEPARTMENTS, { prompt: "部署を選択" }, class: "form-select" %>
+      <% else %>
+        <p class="form-control-plaintext"><%= user.department %></p>
+      <% end %>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <%= f.label :phone_number, "電話番号", class: "form-label" %>
+      <%= f.text_field :phone_number, class: "form-control", placeholder: "090-1234-5678" %>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+      <%= f.label :email, "メールアドレス", class: "form-label" %>
+      <%= f.email_field :email, class: "form-control", placeholder: "yamada.taro@example.com" %>
+    </div>
+
     <% if user.new_record? %>
-      <p>自動採番されます</p>
-    <% else %>
-      <p><%= @user.employee_number %></p>
-      <%# hidden_fieldは不要（ポリシーで許可しないため、送信されても無視される） %>
+      <div class="col-md-6 mb-3">
+        <%= f.label :password, "パスワード", class: "form-label" %>
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <%= f.label :password_confirmation, "パスワード（確認）", class: "form-label" %>
+        <%= f.password_field :password_confirmation, class: "form-control" %>
+      </div>
     <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :furigana %><br />
-    <%= f.text_field :furigana %>
-  </div>
-
-  <div class="field">
-    <%= f.label :department %><br />
-    <%# 部署も管理者のみ編集可能にする場合（UserPolicyで制御） %>
+    
     <% if policy(user).can_manage_administrator_flag? %>
-      <%= f.select :department, User::DEPARTMENTS, { prompt: "部署を選択" } %>
-    <% else %>
-      <%# 部署も編集不可だが表示はする。Hiddenフィールドも不要 %>
-      <p><%= @user.department %></p>
+      <div class="col-12 mb-3">
+        <div class="form-check">
+          <%= f.check_box :administrator_flag, class: "form-check-input" %>
+          <%= f.label :administrator_flag, "管理者として登録する", class: "form-check-label" %>
+        </div>
+      </div>
     <% end %>
   </div>
 
-  <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.text_field :phone_number %>
-  </div>
+  <hr>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email %>
-  </div>
-
-  <% if user.new_record? %>
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password %>
-    </div>
-
-    <div class="field">
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation %>
-    </div>
-  <% end %>
-
-  <%# 管理者フラグは管理者のみ編集可能 %>
-  <% if policy(user).can_manage_administrator_flag? %>
-    <div class="field">
-      <%= f.label :administrator_flag %><br />
-      <%= f.check_box :administrator_flag %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
+  <div class="d-grid mt-4">
+    <%= f.submit "登録", class: "btn btn-primary btn-lg" %>
   </div>
 <% end %>
