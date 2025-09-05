@@ -1,23 +1,58 @@
 <%# app/views/users/show.html.erb %>
 
-<h1>社員詳細</h1>
-
-<p><strong>社員番号:</strong> <%= @user.employee_number %></p>
-<p><strong>名前:</strong> <%= @user.name %></p>
-<p><strong>ふりがな:</strong> <%= @user.furigana %></p>
-<p><strong>部署:</strong> <%= @user.department %></p>
-<p><strong>電話番号:</strong> <%= @user.phone_number %></p>
-<p><strong>メールアドレス:</strong> <%= @user.email %></p>
-<p><strong>管理者フラグ:</strong> <%= @user.administrator_flag ? 'はい' : 'いいえ' %></p>
-
-<%# 編集リンク（UserPolicyに従って表示制御） %>
-<% if policy(@user).edit? %>
-  <%= link_to "編集", edit_user_path(@user), class: "btn btn-secondary" %>
-<% end %>
-
-<%# 削除リンク（UserPolicyに従って表示制御） %>
-<% if policy(@user).destroy? %>
-  <%= link_to "削除", @user, data: { turbo_method: :delete, turbo_confirm: "本当にこの社員を削除しますか？" }, class: "btn btn-danger" %>
-<% end %>
-
-<%= link_to "一覧に戻る", users_path, class: "btn btn-info mt-3" %>
+<div class="container py-4">
+  <div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h1 class="h3 card-title mb-0">社員詳細</h1>
+      <div class="btn-group" role="group">
+        <% if policy(@user).edit? %>
+          <%= link_to "編集", edit_user_path(@user), class: "btn btn-warning" %>
+        <% end %>
+        <% if policy(@user).destroy? %>
+          <%= link_to "削除", @user, data: { turbo_method: :delete, turbo_confirm: "本当にこの社員を削除しますか？" }, class: "btn btn-danger" %>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>社員番号:</strong>
+          <span><%= @user.employee_number %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>名前:</strong>
+          <span><%= @user.name %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>ふりがな:</strong>
+          <span><%= @user.furigana %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>部署:</strong>
+          <span><%= @user.department %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>電話番号:</strong>
+          <span><%= @user.phone_number %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>メールアドレス:</strong>
+          <span><%= @user.email %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>管理者フラグ:</strong>
+          <% if @user.administrator_flag %>
+            <span class="badge bg-success">はい</span>
+          <% else %>
+            <span class="badge bg-secondary">いいえ</span>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="card-footer text-end">
+      <%= link_to "一覧に戻る", users_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
+</div>
