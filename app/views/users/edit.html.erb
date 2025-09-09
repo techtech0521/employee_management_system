@@ -1,8 +1,18 @@
 <%# app/views/users/edit.html.erb %>
 
-<h1>社員情報編集</h1>
-
-<%= render 'form', user: @user %>
-
-<%= link_to "社員詳細に戻る", user_path(@user) %> |
-<%= link_to "社員一覧に戻る", users_path %>
+<div class="container py-4">
+  <div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h1 class="h3 card-title mb-0">社員情報編集</h1>
+    </div>
+    <div class="card-body">
+      <%= render 'form', user: @user %>
+    </div>
+    <div class="card-footer text-center">
+      <div class="btn-group" role="group">
+        <%= link_to "社員詳細に戻る", user_path(@user), class: "btn btn-outline-secondary btn-sm" %>
+        <%= link_to "社員一覧に戻る", users_path, class: "btn btn-outline-secondary btn-sm" %>
+      </div>
+    </div>
+  </div>
+</div>
