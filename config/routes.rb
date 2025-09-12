@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     get 'users/edit', to: 'devise/registrations#edit', as: :edit_user_registration
     patch 'users', to: 'devise/registrations#update', as: :user_registration
     put 'users', to: 'devise/registrations#update'
-    delete 'users', to: 'devise/registrations#destroy' # 必要であればアカウント削除も残す
+    delete 'users', to: 'devise/registrations#destroy'
   end
 
   root to: "users#index"

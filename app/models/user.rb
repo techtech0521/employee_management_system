@@ -4,7 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # validates :employee_number, presence: true, uniqueness: true, on: :create # uniquenessは新規作成時のみ適用
   validates :employee_number, presence: true, uniqueness: true
   validates :employee_number, format: { with: /\A[0-9]{3}\z/, message: "は3桁の数字で入力してください" }, allow_blank: true # 3桁の数字形式をチェック
 

@@ -1,7 +1,6 @@
 <%# app/views/users/_form.html.erb %>
 
 <%= form_with(model: user) do |f| %>
-  <%# エラーメッセージの表示 %>
   <% if user.errors.any? %>
     <div class="alert alert-danger" role="alert">
       <h4 class="alert-heading">入力内容に不備があります</h4>
@@ -15,7 +14,6 @@
     </div>
   <% end %>
 
-  <%# フォーム入力項目 %>
   <div class="row">
     <div class="col-md-6 mb-3">
       <%= f.label :employee_number, "社員番号", class: "form-label" %>
