@@ -28,4 +28,22 @@ class User < ApplicationRecord
       self.employee_number = format('%03d', last_number.to_i + 1)
     end
   end
+
+  # Ransack で検索可能な属性を定義
+  def self.ransackable_attributes(auth_object = nil)
+    %w[
+      name
+      furigana
+      department
+      employee_number
+      email
+      phone_number
+      administrator_flag
+    ]
+  end
+
+  # Ransack で検索可能な関連（今回は不要なら空配列でOK）
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end

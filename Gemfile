@@ -76,3 +76,5 @@ gem "bootstrap", "~> 5.3.3"
 
 gem 'rails-i18n'
 gem 'devise-i18n'
+
+gem 'ransack'

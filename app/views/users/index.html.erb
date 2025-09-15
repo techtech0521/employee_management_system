@@ -9,6 +9,27 @@
       <% end %>
     </div>
     <div class="card-body">
+      <!-- 🔍 検索フォームを追加 -->
+        <%= search_form_for @q, url: users_path, method: :get, html: { class: "row g-3 mb-4" } do |f| %>
+          <div class="col-md-3">
+            <%= f.label :name_cont, "名前", class: "form-label" %>
+            <%= f.search_field :name_cont, class: "form-control" %>
+          </div>
+          <div class="col-md-3">
+            <%= f.label :furigana_cont, "ふりがな", class: "form-label" %>
+            <%= f.search_field :furigana_cont, class: "form-control" %>
+          </div>
+          <div class="col-md-3">
+            <%= f.label :department_eq, "部署", class: "form-label" %>
+            <%= f.select :department_eq, User::DEPARTMENTS, { include_blank: "指定なし" }, class: "form-select" %>
+          </div>
+          <div class="col-md-3 d-flex align-items-end">
+            <%= f.submit "検索", class: "btn btn-outline-primary me-2" %>
+            <%= link_to "クリア", users_path, class: "btn btn-outline-secondary" %>
+          </div>
+        <% end %>
+
+      <!-- 📋 一覧テーブル -->
       <div class="table-responsive">
         <table class="table table-hover table-striped mt-3">
           <thead class="table-light">

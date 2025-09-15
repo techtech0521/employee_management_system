@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = policy_scope(User)
+    @q = policy_scope(User).ransack(params[:q])
+    @users = @q.result(distinct: true)
   end
 
   def show
