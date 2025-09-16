@@ -38,13 +38,13 @@
         <table class="table table-hover table-striped mt-3">
           <thead class="table-light">
             <tr>
-              <th>社員番号</th>
-              <th>名前</th>
-              <th>ふりがな</th>
-              <th>部署</th>
-              <th>電話番号</th>
-              <th>メールアドレス</th>
-              <th class="text-center">管理者</th>
+              <th><%= sort_link(@q, :employee_number, "社員番号") %></th>
+              <th><%= sort_link(@q, :name, "名前") %></th>
+              <th><%= sort_link(@q, :furigana, "ふりがな") %></th>
+              <th><%= sort_link(@q, :department, "部署") %></th>
+              <th><%= sort_link(@q, :phone_number, "電話番号") %></th>
+              <th><%= sort_link(@q, :email, "メールアドレス") %></th>
+              <th class="text-center"><%= sort_link(@q, :administrator_flag, "管理者") %></th>
               <th class="text-center">アクション</th>
             </tr>
           </thead>
