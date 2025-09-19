@@ -78,3 +78,6 @@ gem 'rails-i18n'
 gem 'devise-i18n'
 
 gem 'ransack'
+
+gem "kaminari"
+gem "kaminari-bootstrap"

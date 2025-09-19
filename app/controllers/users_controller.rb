@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @q = policy_scope(User).ransack(params[:q])
     # 並び替え指定がない場合は社員番号昇順をデフォルトにする
     @q.sorts = "employee_number asc" if @q.sorts.empty?
-    @users = @q.result(distinct: true)
+    @users = @q.result(distinct: true).page(params[:page]).per(5)
   end
 
   def show
