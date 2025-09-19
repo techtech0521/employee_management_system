@@ -80,4 +80,4 @@ gem 'devise-i18n'
 gem 'ransack'
 
 gem "kaminari"
-gem "kaminari-bootstrap"
+gem 'bootstrap5-kaminari-views'
