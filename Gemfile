@@ -81,3 +81,5 @@ gem 'ransack'
 
 gem "kaminari"
 gem 'bootstrap5-kaminari-views'
+
+gem 'csv'

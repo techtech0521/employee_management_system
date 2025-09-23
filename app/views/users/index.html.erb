@@ -7,6 +7,7 @@
       <% if policy(User).new? %>
         <%= link_to "新規社員登録", new_user_path, class: "btn btn-primary" %>
       <% end %>
+      <%= link_to "CSVダウンロード", users_path(format: :csv, q: params[:q]&.to_unsafe_h, per_page: params[:per_page], s: params[:s]), class: "btn btn-outline-secondary" %>
     </div>
     <div class="card-body">
       <!-- 🔍 検索フォームを追加 -->

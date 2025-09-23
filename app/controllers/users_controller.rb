@@ -9,6 +9,11 @@ class UsersController < ApplicationController
     @q.sorts = "employee_number asc" if @q.sorts.empty?
     per_page = params[:per_page] || 5  # デフォルト5件
     @users = @q.result(distinct: true).page(params[:page]).per(per_page)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @users.to_csv, filename: "users-#{Time.current.strftime('%Y%m%d%H%M%S')}.csv" }
+    end
   end
 
   def show

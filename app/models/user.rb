@@ -1,3 +1,5 @@
+require "csv"
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -45,5 +47,16 @@ class User < ApplicationRecord
   # Ransack で検索可能な関連（今回は不要なら空配列でOK）
   def self.ransackable_associations(auth_object = nil)
     []
+  end
+
+  def self.to_csv
+    attributes = %w[id employee_number name furigana department phone_number email administrator_flag created_at]
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes.map { |attr| human_attribute_name(attr) } # 日本語ヘッダ対応
+      all.find_each do |user|
+        csv << attributes.map { |attr| user.send(attr) }
+      end
+    end
   end
 end
