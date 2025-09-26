@@ -12,7 +12,13 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv { send_data @users.to_csv, filename: "users-#{Time.current.strftime('%Y%m%d%H%M%S')}.csv" }
+      format.csv do
+        bom = "\uFEFF" # BOMを追加
+        send_data bom + @users.to_csv,
+                  filename: "users-#{Time.current.strftime('%Y%m%d%H%M%S')}.csv",
+                  type: "text/csv; charset=utf-8"
+      end
+
     end
   end
 
