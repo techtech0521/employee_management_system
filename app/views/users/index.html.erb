@@ -4,10 +4,17 @@
   <div class="card shadow-sm">
     <div class="card-header d-flex justify-content-between align-items-center">
       <h1 class="h3 card-title mb-0">社員一覧</h1>
-      <% if policy(User).new? %>
-        <%= link_to "新規社員登録", new_user_path, class: "btn btn-primary" %>
-      <% end %>
-      <%= link_to "CSVダウンロード", users_path(format: :csv, q: params[:q]&.to_unsafe_h, per_page: params[:per_page], s: params[:s]), class: "btn btn-outline-secondary" %>
+      <div>
+        <% if policy(User).new? %>
+          <%= link_to "新規社員登録", new_user_path, class: "btn btn-primary" %>
+        <% end %>
+        <%= link_to "CSVダウンロード",
+            users_path(format: :csv,
+                      q: params[:q]&.to_unsafe_h,
+                      per_page: params[:per_page],
+                      s: params[:s]),
+            class: "btn btn-outline-secondary ms-2" %>
+      </div>
     </div>
     <div class="card-body">
       <!-- 🔍 検索フォームを追加 -->
