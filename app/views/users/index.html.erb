@@ -58,6 +58,7 @@
               <th><%= sort_link(@q, :department, "部署") %></th>
               <th><%= sort_link(@q, :phone_number, "電話番号") %></th>
               <th><%= sort_link(@q, :email, "メールアドレス") %></th>
+              <th><%= sort_link(@q, :created_at, "作成日") %></th>
               <th class="text-center"><%= sort_link(@q, :administrator_flag, "管理者") %></th>
               <th class="text-center">アクション</th>
             </tr>
@@ -71,6 +72,7 @@
                 <td><%= user.department %></td>
                 <td><%= user.phone_number %></td>
                 <td><%= user.email %></td>
+                <td><%= user.created_at.strftime("%Y-%m-%d") %></td>
                 <td class="text-center">
                   <% if user.administrator_flag %>
                     <span class="badge bg-success">はい</span>
